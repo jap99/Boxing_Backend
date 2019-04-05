@@ -1,13 +1,24 @@
 import requests
 import re
+from firebase import firebase
 import firebase_admin
 from firebase_admin import credentials
 from bs4 import BeautifulSoup
 from csv import writer
 
+firebase = firebase.FirebaseApplication('https://boxingyeah-e5d30.firebaseio.com/')
+# GET
+# result = firebase.GET('/user',None)
+
+# POST
+result = firebase.POST('/user',{'Three':'Bye'})
+print(result)
+
+
 response = requests.get('http://www.espn.com/boxing/story/_/id/12508267/boxing-schedule')
 
-cred = credentials.Certificate("cleandev-ios-firebase-adminsdk-a8et7-822c83eaca.json")
+# the way it showed in Firebase docs - https://console.firebase.google.com/u/0/project/cleandev-ios/settings/serviceaccounts/adminsdk
+cred = credentials.Certificate('cleandev-ios-firebase-adminsdk-a8et7-822c83eaca.json')
 firebase_admin.initialize_app(cred)
 
 soup = BeautifulSoup(response.text, 'html.parser')
